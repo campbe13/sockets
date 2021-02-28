@@ -13,8 +13,13 @@ see echo/server.py   logs to socket.log (appends, you may have to delete old)
    * will echo the data you type in back at you
    * `quit` will end the connection
    * check the socket source & dest while you are talking to the server `netstat -lan|less`
-Questons: 
-1.  Can you talk to it from another user on the same box?   Why, why not?
-1.  Can you talk to it from another box?   Why, why not?
+# Questons: 
+1.  Can you talk to it from another user on the same box?   Why or  why not?
+1.  Can you talk to it from another box?   Why or why not?
+1.  Can you run the server code many times in the background?  Why or why not?
+1.  Can you run the server code using a different port? 
+	1. copy the code to server2.py, change the port 
+	2. run both `./server.py &` and `./server2.py &` at the same time, in the background
+	3. does it work? Why or why not?
 
 # multi connections
