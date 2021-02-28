@@ -6,6 +6,8 @@ read the data sent by client
 and send it back to the client
 demonstrating simple sockets for 440
 
+good ref for students http://realpython.com/python-sockets/
+
 p.m.campbell
 2021-02-26
 '''
@@ -13,7 +15,7 @@ import socket
 import logging as log
 
 ''' 
-socket closed when client killed (ex nc as client)
+socket closed when client killed or quit\n\n given
 ex: nc -v -n 127.0.0.1 8111
 '''
 
@@ -30,11 +32,13 @@ def makeSocket(IP, PORT):
            payload = connection.recv(1024)  # receive 
            if not payload:
              break
-           # default UTF-9
-           if payload.decode() == 'quit':
+           # default UTF-8
+           data = payload.decode()
+           if data.startswith('quit'):
              log.info("quit requested ")
+             connection.close()
              break
-           log.info("received: "+ payload.decode())
+           log.info("received: "+ data.rstrip('\n'))
            connection.sendall(payload) # send
 
 IP  = "127.0.0.1"  # loopback
@@ -43,6 +47,6 @@ PORT = 8111	   # unassigned, non privileged ports > 1023
 # filemode defaults to a, append
 #log.basicConfig(level=log.DEBUG, filename='sockets.log', format='%(asctime)s-%(process)d-$(levelname)s-%(name)s-%(message)s')
 log.basicConfig(level=log.DEBUG, filename='sockets.log', format='%(asctime)s: pid%(process)d   %(message)s')
-log.info(f'Will listen on {IP}:{PORT}')
+log.info(f'binding to {IP}:{PORT}')
 
 makeSocket(IP, PORT)
